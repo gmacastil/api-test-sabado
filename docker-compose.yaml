@@ -1,0 +1,28 @@
+version: '3.8' # Puedes ajustar la versión según tus necesidades
+
+services:
+  api:
+    image: api-test-sabado:2
+    container_name: api
+    ports:
+      - "9001:8080"
+    networks:
+      - apis
+
+  api2:
+    image: api-test-sabado:5
+    container_name: api2
+    ports:
+      - "9002:8080"
+    environment:
+     - URL_API=http://api:8080
+     - CITY_SUMMARY=madrid,roma
+     - MIN=-1
+     - MAX=4
+    networks:
+      - apis
+
+networks: 
+  apis:
+    driver: bridge
+

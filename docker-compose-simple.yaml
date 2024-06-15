@@ -1,0 +1,12 @@
+version: '3.8' # Puedes ajustar la versión según tus necesidades
+
+services:
+  api5:
+    image: api-test-sabado:5
+    container_name: api5
+    ports:
+      - "9005:8080"
+    environment:
+      - CITY_SUMMARY=caracas,santiago
+      - MIN=-1
+      - MAX=4

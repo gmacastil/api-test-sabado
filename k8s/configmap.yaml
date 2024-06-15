@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: api-config
+  namespace: dev
+data:
+  VEHICULOS: "moto,carro,avion"
+  MIN: "0"
+  MAX: "30"
+  URL_API: "http://api-service-compras:8080"

@@ -1,3 +1,5 @@
+using System.Linq;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -16,18 +18,27 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-var summaries = new[]
+// Obtener la variable de entorno
+string? citySummary = Environment.GetEnvironmentVariable("VEHICULOS");
+int min = int.Parse(Environment.GetEnvironmentVariable("MIN"));
+int max = int.Parse(Environment.GetEnvironmentVariable("MAX"));
+
+// Lista de summaries por defecto
+var summaries = new[] {"" };
+
+// Si la variable de entorno está definida, separar los valores por comas y asignarlos a summaries
+if (!string.IsNullOrEmpty(citySummary))
 {
-    "Bogota", "Lima", "Buenos Aires"
-};
+    summaries = citySummary.Split(',');
+}
 
 app.MapGet("/ciudades", () =>
 {
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
+    var forecast = Enumerable.Range(1, 5).Select(index =>
         new WeatherForecast
         (
             DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
+            Random.Shared.Next(min, max),
             summaries[Random.Shared.Next(summaries.Length)]
         ))
         .ToArray();
